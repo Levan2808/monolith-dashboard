@@ -2,7 +2,7 @@
 <html lang="ka">
 <head>
 <meta charset="UTF-8">
-<title>Monolith Executive Intelligence</title>
+<title>Monolith Executive Intelligence v19</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -1057,7 +1057,7 @@ table.data tr.tot td { background:var(--cream-2); font-weight:600; border-top:2p
       <div class="brand-mark">M</div>
       <div>
         <h1>Monolith Executive Intelligence</h1>
-        <div class="tag">Sales · Cash · Inventory · Performance</div>
+        <div class="tag">Sales · Cash · Inventory · Performance · v19 Decision Engine</div>
       </div>
     </div>
     <div class="mast-r">
@@ -7747,6 +7747,169 @@ try { if (typeof DATA_T4 !== 'undefined') { DATA_T4.manager_history = window.MAN
   setTimeout(renderManagerHistory, 500);
   ['t4_projFilter','mhProjectFilter','mhTypeFilter','mhManagerFilter','mhMetricFilter','mhViewFilter'].forEach(id=>{ const el=$mh(id); if(el) el.addEventListener('change', renderManagerHistory); });
   document.querySelectorAll('#t4_typeFilter button').forEach(btn=>btn.addEventListener('click',()=>setTimeout(renderManagerHistory,50)));
+})();
+</script>
+
+
+
+<style>
+/* ===== CEO DECISION ENGINE v19 ===== */
+.ceo-v19-wrap{margin-top:18px;display:grid;gap:16px;}
+.ceo-v19-status{border-radius:10px;padding:20px 22px;border:1px solid var(--line);box-shadow:var(--shadow-sm);display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center;}
+.ceo-v19-status.red{background:var(--red-bg);border-color:#e8c0c0;color:var(--red);}
+.ceo-v19-status.amber{background:var(--amber-bg);border-color:#e8c89a;color:var(--amber);}
+.ceo-v19-status.green{background:var(--green-bg);border-color:#c5d8c8;color:var(--green);}
+.ceo-v19-title{font-size:18px;font-weight:900;letter-spacing:-.01em;margin-bottom:4px;}
+.ceo-v19-sub{font-size:12px;color:var(--ink-2);line-height:1.45;}
+.ceo-v19-seal{font-family:'Fraunces',serif;font-size:34px;line-height:1;font-weight:700;}
+.ceo-v19-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;}
+.ceo-v19-signal{background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px 15px;border-left:4px solid var(--gold);min-height:112px;}
+.ceo-v19-signal.red{border-left-color:var(--red);background:var(--red-bg);}
+.ceo-v19-signal.amber{border-left-color:var(--amber);background:var(--amber-bg);}
+.ceo-v19-signal.green{border-left-color:var(--green);background:var(--green-bg);}
+.ceo-v19-lbl{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);font-weight:900;margin-bottom:6px;}
+.ceo-v19-val{font-family:'Fraunces',serif;font-size:26px;line-height:1;letter-spacing:-.02em;color:var(--ink);}
+.ceo-v19-verdict{font-size:11px;font-weight:900;margin-top:7px;}
+.ceo-v19-note{font-size:11px;color:var(--ink-3);margin-top:5px;line-height:1.35;}
+.ceo-v19-actions{background:var(--panel);border:1px solid var(--line);border-radius:8px;overflow:hidden;}
+.ceo-v19-actions-hd{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:center;}
+.ceo-v19-actions-hd strong{font-size:14px;}
+.ceo-v19-actions-body{padding:0 18px;}
+.ceo-v19-action{display:grid;grid-template-columns:92px 1fr 140px 120px 140px;gap:12px;align-items:center;padding:13px 0;border-bottom:1px solid var(--line);font-size:12px;}
+.ceo-v19-action:last-child{border-bottom:none;}
+.ceo-v19-priority{font-family:'JetBrains Mono',monospace;font-weight:900;border-radius:4px;padding:5px 8px;text-align:center;color:#fff;font-size:11px;}
+.ceo-v19-priority.red{background:var(--red)}.ceo-v19-priority.amber{background:var(--amber)}.ceo-v19-priority.green{background:var(--green)}
+.ceo-v19-action-title{font-weight:900;font-size:13px;color:var(--ink);margin-bottom:2px;}
+.ceo-v19-action-desc{color:var(--ink-3);line-height:1.35;}
+.ceo-v19-meta-lbl{font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);font-weight:900;display:block;margin-bottom:2px;}
+.ceo-v19-meta-val{font-weight:800;color:var(--ink);}
+.ceo-v19-blocked{padding:12px 14px;border-radius:6px;background:var(--red);color:#fff;font-weight:900;font-size:12px;margin-top:10px;}
+@media(max-width:1300px){.ceo-v19-grid{grid-template-columns:repeat(3,1fr)}.ceo-v19-action{grid-template-columns:1fr}.ceo-v19-seal{text-align:left}}
+@media(max-width:800px){.ceo-v19-grid{grid-template-columns:1fr}.ceo-v19-status{grid-template-columns:1fr}}
+</style>
+
+<script>
+/* ===== CEO DECISION ENGINE v19: FINAL STATUS + AUTO ACTIONS =====
+   Built on existing v18 data objects. Does not replace tabs; it adds the final decision layer.
+*/
+(function(){
+  const byId = (id)=>document.getElementById(id);
+  const money = (n)=>'$'+Math.round(Number(n||0)).toLocaleString('en-US');
+  const pct = (n)=>Number.isFinite(Number(n)) ? Number(n).toFixed(1)+'%' : '—';
+  const projects = ['EC','DIG','OG','OC'];
+
+  function getTrustScore(){
+    try{
+      const rbRows = window.RB_UNIT_EVENTS || [];
+      const returned = rbRows.filter(r=>r.is_returned).length;
+      const barter = rbRows.filter(r=>r.is_barter && !r.is_returned).length;
+      const missingContract = rbRows.filter(r=>!String(r.contract_id||'').trim()).length;
+      const ciMissing = Array.isArray(window.CI_CONTRACT_ISSUES?.missing) ? window.CI_CONTRACT_ISSUES.missing.length : Number(window.CI_CONTRACT_ISSUES?.missing||0);
+      const issues = Math.max(missingContract, ciMissing);
+      return Math.max(0, 100 - Math.min(35, issues/40) - Math.min(20, returned/5) - Math.min(15, barter/10));
+    }catch(e){ return 94; }
+  }
+  function sumHealth(){
+    const h = (window.DATA_T1 && DATA_T1.projects_health) ? DATA_T1.projects_health : [];
+    const total = h.reduce((s,p)=>s+Number(p.apt_total||0),0);
+    const sold = h.reduce((s,p)=>s+Number(p.apt_sold||0),0);
+    const value = h.reduce((s,p)=>s+Number(p.cv||0),0);
+    const paid = h.reduce((s,p)=>s+Number(p.pd||0),0);
+    const overdue = h.reduce((s,p)=>s+Number(p.overdue||0),0);
+    const free = h.reduce((s,p)=>s+Number(p.apt_free||0),0);
+    const velocity = h.reduce((s,p)=>s+Number(p.velocity||0),0);
+    const maxSellout = h.reduce((m,p)=>Math.max(m,Number(p.sellout_months||0)),0);
+    return {total,sold,value,paid,overdue,free,velocity,maxSellout,
+      sellThrough: total ? sold/total : 0,
+      cashRealization: value ? paid/value : 0,
+      overduePct: value ? overdue/value : 0
+    };
+  }
+  function sigSell(v){ if(v<0.25) return ['red','LOW DEMAND']; if(v<0.40) return ['amber','MONITOR']; return ['green','CONTROLLED']; }
+  function sigVelocity(v){ if(v<10) return ['red','SALES ENGINE WEAK']; if(v<20) return ['amber','STABLE']; return ['green','STRONG']; }
+  function sigSellout(v){ if(v>36) return ['red','CAPITAL LOCKED']; if(v>24) return ['amber','SLOW EXIT']; return ['green','FAST EXIT']; }
+  function sigCash(v){ if(v<0.35) return ['red','LIQUIDITY RISK']; if(v<0.55) return ['amber','CASH GAP']; return ['green','CASH CONTROL']; }
+  function sigOverdue(v){ if(v>0.05) return ['red','COLLECTION FAILURE']; if(v>0.02) return ['amber','COLLECTION RISK']; return ['green','CONTROLLED']; }
+  function sigTrust(v){ if(v<95) return ['red','DECISION BLOCKED']; if(v<98) return ['amber','RECONCILE']; return ['green','TRUSTED']; }
+
+  function makeAction(priority,title,desc,owner,sla,escalation){ return {priority,title,desc,owner,sla,escalation}; }
+  function buildActions(k,sigs){
+    const actions=[];
+    if(sigs.trust[0]==='red') actions.push(makeAction('red','Data reconciliation before decision','Data Trust <95%. No Unit_ID = No Sale. No Contract_ID = No Cash Recognition.','Data Owner + Finance','24h','CFO → CEO'));
+    if(sigs.cash[0]==='red') actions.push(makeAction('red','Collection war-room','Cash realization is below CEO threshold. Push top debtors and next 30d schedule.','CFO / Finance','48h','CEO'));
+    if(sigs.sellout[0]==='red') actions.push(makeAction('red','Pricing committee for locked capital','Sellout horizon exceeds 36 months. Reprice cold inventory and rebalance product mix.','Sales + Finance','7d','CEO'));
+    if(sigs.sell[0]==='red') actions.push(makeAction('red','Demand correction plan','Sell-through below 25%. Product/price/channel mismatch requires correction.','Commercial Head','7d','CEO'));
+    if(sigs.velocity[0]==='red') actions.push(makeAction('amber','Sales engine repair','Velocity below 10 units/month. Reallocate channel budget and enforce manager accountability.','Sales Head','7d','CEO'));
+    if(sigs.overdue[0] !== 'green') actions.push(makeAction(sigs.overdue[0],'Top debtors recovery','Overdue bucket needs owner-level recovery plan and daily follow-up.','Collections Owner','48h','CFO'));
+    if(!actions.length) actions.push(makeAction('green','Keep discipline','No critical breach. Keep weekly cash, trust and velocity review.','CEO Office','Weekly','Board'));
+    return actions;
+  }
+
+  function render(){
+    const el = byId('v15ExecutiveStatus');
+    if(!el || !window.DATA_T1) return;
+    const k = sumHealth();
+    const trust = getTrustScore();
+    const sigs = {
+      sell: sigSell(k.sellThrough),
+      velocity: sigVelocity(k.velocity),
+      sellout: sigSellout(k.maxSellout),
+      cash: sigCash(k.cashRealization),
+      overdue: sigOverdue(k.overduePct),
+      trust: sigTrust(trust)
+    };
+    const reds = Object.values(sigs).filter(s=>s[0]==='red').length;
+    const ambers = Object.values(sigs).filter(s=>s[0]==='amber').length;
+    const status = reds>=2 ? 'CRITICAL' : reds===1 ? 'WARNING' : 'HEALTHY';
+    const statusCls = status==='CRITICAL'?'red':status==='WARNING'?'amber':'green';
+    const actions = buildActions(k,sigs);
+    const cards = [
+      ['Sell-through', pct(k.sellThrough*100), sigs.sell, `${k.sold}/${k.total} ბინა`],
+      ['Velocity', Number(k.velocity||0).toFixed(1)+'/mo', sigs.velocity, 'all projects'],
+      ['Sellout', Math.round(k.maxSellout)+' mo', sigs.sellout, 'max project horizon'],
+      ['Cash Realization', pct(k.cashRealization*100), sigs.cash, `${money(k.paid)} / ${money(k.value)}`],
+      ['Overdue', pct(k.overduePct*100), sigs.overdue, money(k.overdue)],
+      ['Data Trust', pct(trust), sigs.trust, 'decision gate']
+    ].map(([label,val,sig,note])=>`
+      <div class="ceo-v19-signal ${sig[0]}">
+        <div class="ceo-v19-lbl">${label}</div>
+        <div class="ceo-v19-val">${val}</div>
+        <div class="ceo-v19-verdict">${sig[0]==='red'?'🔴':sig[0]==='amber'?'🟡':'🟢'} ${sig[1]}</div>
+        <div class="ceo-v19-note">${note}</div>
+      </div>`).join('');
+    const actionRows = actions.map(a=>`
+      <div class="ceo-v19-action">
+        <div><span class="ceo-v19-priority ${a.priority}">${a.priority.toUpperCase()}</span></div>
+        <div><div class="ceo-v19-action-title">${a.title}</div><div class="ceo-v19-action-desc">${a.desc}</div></div>
+        <div><span class="ceo-v19-meta-lbl">Owner</span><span class="ceo-v19-meta-val">${a.owner}</span></div>
+        <div><span class="ceo-v19-meta-lbl">SLA</span><span class="ceo-v19-meta-val">${a.sla}</span></div>
+        <div><span class="ceo-v19-meta-lbl">Escalation</span><span class="ceo-v19-meta-val">${a.escalation}</span></div>
+      </div>`).join('');
+    const blocked = sigs.trust[0]==='red' ? '<div class="ceo-v19-blocked">DECISION BLOCKED: Data Trust <95%. ფინანსური/ფასის/ბონუსის გადაწყვეტილება არ მიიღება reconciliation-მდე.</div>' : '';
+    el.innerHTML = `
+      <div class="ceo-v19-wrap" data-version="v19">
+        <div class="ceo-v19-status ${statusCls}">
+          <div>
+            <div class="ceo-v19-title">CEO FINAL STATUS: ${status}</div>
+            <div class="ceo-v19-sub">${reds} red signals · ${ambers} amber signals · Cash Flow > Paper Profit · No data = no decision</div>
+            ${blocked}
+          </div>
+          <div class="ceo-v19-seal">v19</div>
+        </div>
+        <div class="ceo-v19-grid">${cards}</div>
+        <div class="ceo-v19-actions">
+          <div class="ceo-v19-actions-hd"><strong>Auto Action Engine</strong><span class="caption">trigger → owner → SLA → escalation</span></div>
+          <div class="ceo-v19-actions-body">${actionRows}</div>
+        </div>
+      </div>`;
+
+    // Expose actions for future Command Center integration.
+    window.CEO_V19_DECISION = {status, signals:sigs, kpis:k, trust, actions};
+  }
+
+  document.addEventListener('DOMContentLoaded', ()=>setTimeout(render, 150));
+  setTimeout(render, 800);
+  window.renderCEODecisionEngineV19 = render;
 })();
 </script>
 
